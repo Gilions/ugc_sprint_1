@@ -74,3 +74,9 @@
 * [Алексей Комиссаров](https://github.com/akomissarov2020)
 * [Петрушков Станислав](https://github.com/warrinot)
 * [Виталий Софронюк](https://github.com/Gilions)
+
+Kafka_Api
+===
+* временный запуск из папки ugc 
+  - docker-compose up
+  - и в соседнем терминале "uvicorn main:app --reload"
