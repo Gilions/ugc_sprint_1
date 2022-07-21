@@ -8,4 +8,6 @@ class Event(BaseModel):
     movie_id: str
     user_id: str
 
-
+class UserValues(BaseModel):
+    key: str
+    value: str

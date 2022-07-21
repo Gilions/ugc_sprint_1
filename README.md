@@ -77,6 +77,9 @@
 
 Kafka_Api
 ===
-* временный запуск из папки ugc 
-  - docker-compose up
+*  запуск в отладочном режиме c confluent из папки ugc 
+  - "docker-compose up -f docker-compose-debug.yaml"
+  - и в соседнем терминале "uvicorn main:app --reload"
+*  запуск в нормальном режиме из папки ugc 
+  - "docker-compose up"
   - и в соседнем терминале "uvicorn main:app --reload"
