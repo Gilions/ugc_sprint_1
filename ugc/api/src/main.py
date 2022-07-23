@@ -12,11 +12,13 @@ from models import Event, UserValues
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="UGC",
+app = FastAPI(
+    title="UGC",
     description='Асинхронный сборщик UGC',
     docs_url='/api/openapi',
     openapi_url='/api/openapi.json',
-    default_response_class=ORJSONResponse,)
+    default_response_class=ORJSONResponse,
+)
 
 
 @app.on_event("startup")
@@ -39,14 +41,13 @@ async def kafka_load(event: Event):
 
 
 @app.get("/ugc-consumer",
-          response_model=List[UserValues],
-          summary='Получение данных из хранилищща',
-          description='Проверка работы хранилища Kafka',
-          tags=['UGC'],
-          status_code=200)
+         response_model=List[UserValues],
+         summary='Получение данных из хранилищща',
+         description='Проверка работы хранилища Kafka',
+         tags=['UGC'],
+         status_code=200)
 async def get_messages_from_kafka():
-        """
-        Consume a list of messages from kafka.
-        """
-
-        return await process_get_messages()
+    """
+    Consume a list of messages from kafka.
+    """
+    return await process_get_messages()
