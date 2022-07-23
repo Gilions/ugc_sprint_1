@@ -74,3 +74,12 @@
 * [Алексей Комиссаров](https://github.com/akomissarov2020)
 * [Петрушков Станислав](https://github.com/warrinot)
 * [Виталий Софронюк](https://github.com/Gilions)
+
+Kafka_Api
+===
+*  запуск в отладочном режиме c confluent из папки ugc 
+  - "docker-compose up -f docker-compose-debug.yaml"
+  - и в соседнем терминале "uvicorn main:app --reload"
+*  запуск в нормальном режиме из папки ugc 
+  - "docker-compose up"
+  - и в соседнем терминале "uvicorn main:app --reload"
