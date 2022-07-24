@@ -4,10 +4,10 @@ import logging
 
 from fastapi import HTTPException
 from http import HTTPStatus
-
 from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
 from kafka.admin import KafkaAdminClient, NewTopic
-from models import UserValues
+from kafka.errors import TopicAlreadyExistsError
+from models.models import UserValues
 from Settings import KafkaSet
 
 logger = logging.getLogger(__name__)
@@ -20,23 +20,19 @@ def kafka_json_deserializer(serialized):
 
 # creating topic using kafka-python
 def create_topic() -> None:
-
     admin_client = KafkaAdminClient(
         bootstrap_servers=f"{KafkaSet.KAFKA_HOST}:{KafkaSet.KAFKA_PORT}",
         client_id='test'
     )
+    try:
+        topic_list = [(NewTopic(name=KafkaSet.KAFKA_TOPIC, num_partitions=1, replication_factor=1))]
+        admin_client.create_topics(new_topics=topic_list, validate_only=False)
+        logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} created')
+    except TopicAlreadyExistsError:
+        logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} exists')
 
-    # check if topic exists
-    topic_metadata = admin_client.list_topics()
-    if KafkaSet.KAFKA_TOPIC not in topic_metadata:
-        try:
-            topic_list = [(NewTopic(name=KafkaSet.KAFKA_TOPIC, num_partitions=1, replication_factor=1))]
-            admin_client.create_topics(new_topics=topic_list, validate_only=False)
-            logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} created')
-        except Exception as e:
-            logger.exception(e)
-    else:
-        logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} already exists')
+    except Exception as e:
+        logger.exception(e)
 
 
 async def process_load_kafka(key, value):
