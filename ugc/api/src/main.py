@@ -33,7 +33,7 @@ async def kafka_load(event: Event):
     """
     Produce a test ugc messages into kafka.
     """
-    key = json.dumps(event.user_id + event.movie_id).encode()
+    key = json.dumps(str(event.user_id) + event.movie_id).encode()
     my_info = json.dumps(event.dict()).encode()
     return await process_load_kafka(key=key, value=my_info)
 
