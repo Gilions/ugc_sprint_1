@@ -40,13 +40,12 @@ async def kafka_load(event: Event):
 
 @app.get("/ugc-consumer",
           response_model=List[UserValues],
-          summary='Получение данных из хранилищща',
+          summary='Получение данных из хранилища',
           description='Проверка работы хранилища Kafka',
           tags=['UGC'],
           status_code=200)
 async def get_messages_from_kafka():
-        """
-        Consume a list of messages from kafka.
-        """
-
-        return await process_get_messages()
+    """
+    Consume a list of messages from kafka.
+    """
+    return await process_get_messages()

@@ -53,6 +53,7 @@ async def process_load_kafka(key, value):
         return {}
 
 
+
 async def process_get_messages():
     consumer = AIOKafkaConsumer(
                                 KafkaSet.KAFKA_TOPIC,
