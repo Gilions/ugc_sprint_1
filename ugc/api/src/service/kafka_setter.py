@@ -35,19 +35,18 @@ def create_topic() -> None:
         logger.exception(e)
 
 
-async def process_load_kafka(key, value):
+async def process_load_kafka(value):
     producer = AIOKafkaProducer(bootstrap_servers=[f'{KafkaSet.KAFKA_HOST}:{KafkaSet.KAFKA_PORT}'])
     await producer.start()
     try:
         # Produce message
-        await producer.send_and_wait(KafkaSet.KAFKA_TOPIC, key=key, value=value)
+        await producer.send_and_wait(KafkaSet.KAFKA_TOPIC, value=value)
     except Exception as exc:
         logger.exception(exc)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(exc))
     finally:
         await producer.stop()
         return {}
-
 
 
 async def process_get_messages():
