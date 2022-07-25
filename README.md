@@ -82,4 +82,4 @@ Kafka_Api
   - и в соседнем терминале "uvicorn main:app --reload"
 *  запуск в нормальном режиме из папки ugc 
   - "docker-compose up"
-  - и в соседнем терминале "uvicorn main:app --reload"
+
