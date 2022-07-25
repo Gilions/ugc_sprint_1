@@ -6,8 +6,7 @@
 venv/
 
 # env file
-ugc/api/.env
-
+.env
 # Cache
 __pycache__/
 *.pyc
