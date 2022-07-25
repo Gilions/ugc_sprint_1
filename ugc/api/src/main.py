@@ -18,7 +18,8 @@ app = FastAPI(title="UGC",
 
 @app.on_event("startup")
 def startup_event():
-    create_topic()
+    # create_topic()
+    pass
 
 
 app.include_router(kafka_producer.router, prefix='/api/v1/kafka')
