@@ -8,6 +8,7 @@ from helpers import get_params
 from models.film import FilmBasicSchema, FilmDetailSchema
 from services.films import FilmService, get_film_service
 
+
 router = APIRouter()
 
 

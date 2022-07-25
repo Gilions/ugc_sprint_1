@@ -2,8 +2,7 @@ import http
 import uuid
 
 import pytest
-from tests.functional.utils.helpers import (remove_data_from_es,
-                                            transform_persons_data)
+from tests.functional.utils.helpers import remove_data_from_es, transform_persons_data
 
 
 class TestPersons:

@@ -5,6 +5,7 @@ from uuid import UUID
 
 from models.mixins import BaseOrjsonModelMixin
 
+
 LIST_DICT_TYPE = Union[List[Dict[str, Union[str, UUID]]], None]
 
 

@@ -1,7 +1,7 @@
 import os
 
 
-DB_HOST = os.environ.get('DB_HOST', 'db')
+DB_HOST = os.environ.get('DB_HOST', 'postgres')
 DB_PORT = os.environ.get('DB_PORT', 5432)
 DB_DATABASE = os.environ.get('POSTGRES_DB', 'movies_auth')
 DB_USER = os.environ.get('POSTGRES_USER', 'movies_auth')
@@ -39,7 +39,7 @@ class Configuration(object):
     PAGINATION_PER_PAGE = os.environ.get('PAGINATION_PER_PAGE', 10)
 
     JAEGER_HOST = os.environ.get('JAEGER_HOST', 'jaeger')
-    JAEGER_PORT = os.environ.get('JAEGER_PORT', 6831)
+    JAEGER_PORT = int(os.environ.get('JAEGER_PORT', 6831))
 
 
 class ProductionConfig(Configuration):

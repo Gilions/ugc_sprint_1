@@ -16,6 +16,7 @@ from models.person import Person
 from pydantic import parse_obj_as
 from utils import backoff
 
+
 MODEL_TYPES = Union[Film, Person, Genre]
 
 logger = logging.getLogger(PROJECT_NAME)

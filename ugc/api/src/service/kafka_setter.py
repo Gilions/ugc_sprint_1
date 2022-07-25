@@ -1,14 +1,15 @@
 import asyncio
 import json
 import logging
-
-from fastapi import HTTPException
 from http import HTTPStatus
-from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
+
+from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
+from fastapi import HTTPException
 from kafka.admin import KafkaAdminClient, NewTopic
 from kafka.errors import TopicAlreadyExistsError
 from models.models import UserValues
 from Settings import KafkaSet
+
 
 logger = logging.getLogger(__name__)
 loop = asyncio.get_event_loop()
@@ -51,15 +52,15 @@ async def process_load_kafka(value):
 
 async def process_get_messages():
     consumer = AIOKafkaConsumer(
-                                KafkaSet.KAFKA_TOPIC,
-                                loop=loop,
-                                bootstrap_servers=[f'{KafkaSet.KAFKA_HOST}:{KafkaSet.KAFKA_PORT}'],
-                                group_id=KafkaSet.GROUP_ID,
-                                enable_auto_commit=True,
-                                auto_commit_interval_ms=KafkaSet.CONSUMER_TIMEOUT_MS,
-                                auto_offset_reset="earliest",
-                                value_deserializer=kafka_json_deserializer,
-        )
+        KafkaSet.KAFKA_TOPIC,
+        loop=loop,
+        bootstrap_servers=[f'{KafkaSet.KAFKA_HOST}:{KafkaSet.KAFKA_PORT}'],
+        group_id=KafkaSet.GROUP_ID,
+        enable_auto_commit=True,
+        auto_commit_interval_ms=KafkaSet.CONSUMER_TIMEOUT_MS,
+        auto_offset_reset="earliest",
+        value_deserializer=kafka_json_deserializer,
+    )
 
     await consumer.start()
     retrieved_requests = []
@@ -74,7 +75,8 @@ async def process_get_messages():
                     retrieved_requests.append(UserValues(value=json.dumps(message.value)))
 
             else:
-                raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Kafka messages not found")
+                raise HTTPException(status_code=HTTPStatus.NOT_FOUND,
+                                    detail="Kafka messages not found")
 
     except Exception as e:
         logger.error(f"Error when trying to consume : {str(e)}")

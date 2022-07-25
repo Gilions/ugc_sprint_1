@@ -1,8 +1,10 @@
 import pytest
-from tests.functional.utils.helpers import (create_index_to_es,
-                                            load_data_to_es,
-                                            remove_data_from_es,
-                                            remove_data_from_redis)
+from tests.functional.utils.helpers import (
+    create_index_to_es,
+    load_data_to_es,
+    remove_data_from_es,
+    remove_data_from_redis,
+)
 
 
 @pytest.fixture(scope='class')

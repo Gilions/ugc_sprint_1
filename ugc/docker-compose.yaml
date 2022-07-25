@@ -1,8 +1,9 @@
 version: '3.5'
+
 services:
-########################
-#    UGC App
-########################
+  ########################
+  #    UGC App
+  ########################
   ugc_api:
     build:
       context: .
@@ -12,9 +13,9 @@ services:
     ports:
       - "8000:8000"
 
-########################
-#    Zookeeper
-########################
+  ########################
+  #    Zookeeper
+  ########################
   zookeeper:
     image: zookeeper:3.5
     container_name: zookeeper
@@ -22,9 +23,9 @@ services:
     env_file:
       - .env
 
-########################
-#    Kafka
-########################
+  ########################
+  #    Kafka
+  ########################
   kafka:
     container_name: kafka
     image: confluentinc/cp-kafka:latest
@@ -40,9 +41,9 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-########################
-#    ClickHouse
-########################
+  ########################
+  #    ClickHouse
+  ########################
 
   clickhouse-node1:
     image: yandex/clickhouse-server
@@ -83,9 +84,9 @@ services:
     depends_on:
       - zookeeper
 
-########################
-#    ETL
-########################
+  ########################
+  #    Kafka-Clickhouse ETL
+  ########################
   ch_etl:
     build:
       context: ./etl

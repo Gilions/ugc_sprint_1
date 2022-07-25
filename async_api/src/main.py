@@ -1,5 +1,6 @@
 import http
 import logging
+import os
 
 import aioredis
 import uvicorn
@@ -12,11 +13,13 @@ from fastapi import FastAPI, Request, Response
 from fastapi.responses import ORJSONResponse
 from helpers import check_authorization
 
+
 app = FastAPI(
     title=config.PROJECT_NAME,
     description='Асинхронный API для кинотеатра',
     docs_url='/api/openapi',
     openapi_url='/api/openapi.json',
+    root_path='/service',
     default_response_class=ORJSONResponse,
 )
 
@@ -35,18 +38,18 @@ async def shutdown():
     await search_service.es.close()
 
 
-@app.middleware('http')
-async def check_user_authorization(request: Request, call_next):
-    url = 'http://auth_app:8000/api/v1/users/check_token/'
-    response = await check_authorization(url, request.headers)
-    if response.get('success'):
-        return await call_next(request)
+if os.getenv('CURRENT_MODE') == 'production':
+    @app.middleware('http')
+    async def check_user_authorization(request: Request, call_next):
+        url = 'http://auth_app:8000/api/v1/users/check_token/'
+        response = await check_authorization(url, request.headers)
+        if response.get('success'):
+            return await call_next(request)
 
-    return Response(status_code=http.HTTPStatus.UNAUTHORIZED)
+        return Response(status_code=http.HTTPStatus.UNAUTHORIZED)
 
 
 # Подключаем роутер к серверу, указав префикс /v1/films
-# Теги указываем для удобства навигации по документации
 app.include_router(films.router, prefix='/api/v1/films')
 app.include_router(genres.router, prefix='/api/v1/genres')
 app.include_router(persons.router, prefix='/api/v1/persons')

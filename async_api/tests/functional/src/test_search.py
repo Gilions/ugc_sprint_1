@@ -3,8 +3,7 @@ import random
 import string
 
 import pytest
-from functional.utils.helpers import (remove_data_from_es,
-                                      transform_films_search)
+from functional.utils.helpers import remove_data_from_es, transform_films_search
 
 
 class TestSearch:

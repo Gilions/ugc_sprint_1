@@ -8,6 +8,7 @@ from helpers import get_params
 from models.genre import GenreListSchema, GenreSchema
 from services.genres import GenreService, get_genre_service
 
+
 router = APIRouter()
 
 
