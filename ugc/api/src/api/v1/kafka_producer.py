@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from typing import List
 from fastapi import APIRouter
 
@@ -17,9 +18,10 @@ async def kafka_load(event: Event):
     """
     Produce a test ugc messages into kafka.
     """
-    key = json.dumps(str(event.user_id) + event.movie_id).encode()
-    my_info = json.dumps(event.dict()).encode()
-    return await process_load_kafka(key=key, value=my_info)
+    data = event.dict()
+    data['date_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    my_info = json.dumps(data).encode()
+    return await process_load_kafka(value=my_info)
 
 
 @router.get("/ugc-consumer",
