@@ -71,8 +71,7 @@ async def process_get_messages():
         for tp, messages in result.items():
             if messages:
                 for message in messages:
-                    retrieved_requests.append(UserValues(key=message.key.decode("utf-8"),
-                                                         value=json.dumps(message.value)))
+                    retrieved_requests.append(UserValues(value=json.dumps(message.value)))
 
             else:
                 raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Kafka messages not found")
