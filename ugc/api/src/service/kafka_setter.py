@@ -5,8 +5,10 @@ from http import HTTPStatus
 
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from fastapi import HTTPException
-from kafka.admin import KafkaAdminClient, NewTopic
-from kafka.errors import TopicAlreadyExistsError
+
+from http import HTTPStatus
+from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
+
 from models.models import UserValues
 from Settings import KafkaSet
 
@@ -17,23 +19,6 @@ loop = asyncio.get_event_loop()
 
 def kafka_json_deserializer(serialized):
     return json.loads(serialized)
-
-
-# creating topic using kafka-python
-def create_topic() -> None:
-    admin_client = KafkaAdminClient(
-        bootstrap_servers=f"{KafkaSet.KAFKA_HOST}:{KafkaSet.KAFKA_PORT}",
-        client_id='test'
-    )
-    try:
-        topic_list = [(NewTopic(name=KafkaSet.KAFKA_TOPIC, num_partitions=1, replication_factor=1))]
-        admin_client.create_topics(new_topics=topic_list, validate_only=False)
-        logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} created')
-    except TopicAlreadyExistsError:
-        logger.warning(f'topic {KafkaSet.KAFKA_TOPIC} exists')
-
-    except Exception as e:
-        logger.exception(e)
 
 
 async def process_load_kafka(value):
