@@ -1,8 +1,11 @@
 from os import getenv
 
 from dotenv import load_dotenv
+
+
 env_path = '.env'
 load_dotenv(dotenv_path=env_path)
+
 
 class KafkaSet:
     KAFKA_TOPIC = getenv('KAFKA_TOPIC', 'Events')

@@ -4,6 +4,7 @@ from functools import wraps
 
 from core.config import PROJECT_NAME
 
+
 logger = logging.getLogger(PROJECT_NAME)
 
 

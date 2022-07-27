@@ -8,6 +8,7 @@ from helpers import get_params
 from models.person import PersonListSchema, PersonSchema
 from services.persons import PersonService, get_person_service
 
+
 router = APIRouter()
 
 

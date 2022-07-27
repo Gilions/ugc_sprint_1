@@ -16,4 +16,4 @@ COPY ./tests ./tests
 
 ENV PYTHONPATH "${PYTHONPATH}:/app/tests"
 
-CMD ["gunicorn", "main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
+CMD ["gunicorn", "main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8085"]
