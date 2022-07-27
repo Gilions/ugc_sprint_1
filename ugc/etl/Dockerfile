@@ -18,7 +18,4 @@ RUN addgroup -S web && adduser -S web -G web \
     && chown web:web -R /app
 USER web
 
-
-#ENTRYPOINT ["sh", "/entrypoint.sh"]
-
 ENTRYPOINT ["./entrypoint.sh", "python3", "main.py"]
