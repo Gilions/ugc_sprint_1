@@ -11,9 +11,14 @@ RUN python3 -m pip install -r requirements.txt --no-cache-dir
 
 COPY ./app .
 
+COPY /app/entrypoint.sh /app
+RUN chmod +x entrypoint.sh
+
 RUN addgroup -S web && adduser -S web -G web \
     && chown web:web -R /app
 USER web
 
-COPY ./entrypoint.sh .
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+
+#ENTRYPOINT ["sh", "/entrypoint.sh"]
+
+ENTRYPOINT ["./entrypoint.sh", "python3", "main.py"]
