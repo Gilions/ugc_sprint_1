@@ -1,4 +1,8 @@
+import orjson
 from pydantic import BaseModel
+
+def orjson_dumps(v, *, default):
+    return orjson.dumps(v, default=default).decode()
 
 
 class Event(BaseModel):
@@ -6,7 +10,13 @@ class Event(BaseModel):
     movie_id: str
     user_id: int
 
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
+
 
 class UserValues(BaseModel):
-    key: str
     value: str
+    class Config:
+        json_loads = orjson.loads
+        json_dumps = orjson_dumps
